@@ -10,6 +10,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "Tile.h"
+#include "Word.h"
 
 
 class Gameplay
@@ -17,10 +18,11 @@ class Gameplay
 public:
     Gameplay(int sizeX, int sizeY, std::vector<Word> &words);
     void startGame();
+    void read(std::vector<Word> words);
 
 private:
-    std::vector <char> tilePool;
     int sizeX, sizeY;
+    std::vector <char> tilePool;
     std::vector <char> validTiles;
     Player player1, player2, player3, player4;
     Player players[4] = {player1, player2, player3, player4};
@@ -44,6 +46,8 @@ private:
     bool nextTileEmpty(int x, int y, bool vertical);
     bool previousTilePlayed(int x, int y, bool vertical);
     bool previousTileEmpty(int x, int y, bool vertical);
+
+
 };
 
 

@@ -22,12 +22,13 @@ Board::Board(int sizeX, int sizeY) {
         column.clear();
     }
 }
+
 void Board::drawBoard() {
     drawLimits();
     setColor(16*LIGHTCYAN+BLUE);
-    for (int x = 0; x < sizeX; x++ ) {
+    for (int x = 0; x < sizeX; x++) {
         int x1 = 7 + 3*x;
-        for (int y = 0; y < /*=*/ sizeY; y++) {
+        for (int y = 0; y < sizeY; y++) {
             int y1 = 5 + y;
             gotoXY(x1, y1);
 

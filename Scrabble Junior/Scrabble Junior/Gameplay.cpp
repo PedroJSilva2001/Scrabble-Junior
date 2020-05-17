@@ -30,14 +30,15 @@ Gameplay::Gameplay(int sizeX, int sizeY, std::vector<Word> &words) {
             }
             position[0] = yCh; position[1] = xCh;
             if (!binary_search(positions.begin(), positions.end(), position)) {
-                tilePool.push_back(word.getName()[letter]);
+                this->tilePool.push_back(word.getName()[letter]);
                 Tile tile = Tile(word.getName()[letter], x, y, available);    //nao é necessario impedir a criação de uma peça numa posicao do tabuleiro já com peça porque essas duas peças possuem a mesma informação
-                board.setTile(tile);    //pôr os objetos tile no tabuleiro              //porem isto é capaz ser mais efieciente
+                this->board.setTile(tile);    //pôr os objetos tile no tabuleiro              //porem isto é capaz ser mais efieciente
             }
             positions.emplace_back(position);
         }
     }
 }
+
 
 void Gameplay::startGame() {
     int playerNumber, winner;
@@ -51,7 +52,7 @@ void Gameplay::startGame() {
     while (std::cin.fail() || playerNumber < 2 ||
            playerNumber > 4) {
         std::cin.clear();
-        std::cin.ignore(10, ' ');
+        std::cin.ignore(20, ' ');
         std::cerr << error_msg << error_msg10 << std::endl;
         std::cerr << retry << std::endl;
         std::cin >> playerNumber;

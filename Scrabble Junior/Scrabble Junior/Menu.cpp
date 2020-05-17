@@ -86,6 +86,7 @@ void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> &words) {
 
     while(gameIsRunning) {
         Gameplay game = Gameplay(sizeX, sizeY, words);
+
         game.startGame();
         std::cout << play_again << std::endl;
         std::cin >> continueGame;
