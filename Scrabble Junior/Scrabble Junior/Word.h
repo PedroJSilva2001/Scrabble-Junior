@@ -1,9 +1,10 @@
 //
-// Created by Pedro on 11-05-2020.
+// Created by 35193 on 17/05/2020.
 //
 
-#ifndef PROJECT_2___SCRABBLE_JUNIOR_WORD_H
-#define PROJECT_2___SCRABBLE_JUNIOR_WORD_H
+#ifndef SCRABBLE_JUNIOR_WORD_H
+#define SCRABBLE_JUNIOR_WORD_H
+
 
 #include "Game Text.h"
 
@@ -24,4 +25,4 @@ private:
 };
 
 
-#endif //PROJECT_2___SCRABBLE_JUNIOR_WORD_H
+#endif //SCRABBLE_JUNIOR_WORD_H

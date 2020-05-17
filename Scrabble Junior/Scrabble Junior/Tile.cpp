@@ -1,9 +1,8 @@
 //
-// Created by Pedro on 07-05-2020.
+// Created by 35193 on 17/05/2020.
 //
 
 #include "Tile.h"
-
 Tile::Tile() = default;
 
 Tile::Tile(char letter, int x, int y, bool available) {
@@ -44,4 +43,3 @@ void Tile::setAvailable(bool available) {
 bool Tile::getEmptyState() const{
     return letter == ' ';
 }
-

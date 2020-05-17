@@ -1,10 +1,9 @@
 //
-// Created by Pedro on 17-05-2020.
+// Created by 35193 on 17/05/2020.
 //
 
 #include "Menu.h"
-
-void readFile(bool tradeBoard){
+void readFile(bool tradeBoard) {
     std::string filePath;
     int fileWord = 0;
     char dataRow[21];
@@ -15,7 +14,7 @@ void readFile(bool tradeBoard){
     int sizeX = 0, sizeY = 0;
     std::vector <Word> words;
 
-    if(!tradeBoard){
+    if (!tradeBoard) {
         std::cout << std::endl;
         std::cout << welcome << std::endl;
     }
@@ -27,7 +26,9 @@ void readFile(bool tradeBoard){
     while (!data.is_open()) {
         std::cerr << error_msg << error_msg_file << std::endl;
         std::cerr << retry << std::endl;
+        std::cin >> filePath;
         getline(std::cin, filePath);
+        std::cin.ignore(10, ' ');
     }
 
     while (!data.eof()) {
@@ -48,35 +49,20 @@ void readFile(bool tradeBoard){
         fileWord++;
     }
 
-    for (int i = 0; i < names.size(); i++)   //set words_
+     for (int i = 0; i < names.size(); i++)   //set words_
+     {
+         Word word = Word(names[i], positions[i], orientations[i]);
+         words.push_back(word);
+     }
+     scrabbleMenu(sizeX, sizeY, words);
+
+    /*Word *words;
+    words = new Word[names.size()];
+    for(int i = 0; i<names.size(); i++)
     {
-        Word word = Word(names[i], positions[i], orientations[i]);
-        words.push_back(word);
-    }
-    scrabbleMenu(sizeX, sizeY, words);
-
+        words[i] = Word(names[i], positions[i], orientations[i]);
+    }*/
 }
-
-/*void f(){
-
-    Word word1 = Word("LAST", "Aa", 'H');
-    Word word2 = Word("SAVE", "Cb", 'H');
-    Word word3 = Word("HELL", "Eb", 'H');
-    Word word4 = Word("ASS", "Ab", 'V');
-    Word word5 = Word("AVE", "Cc", 'V');
-    Word word6 = Word("BELL", "Be", 'V');
-    std::vector<Word> words;
-    words.resize(50);
-    words.push_back(word1);
-    words.push_back(word2);
-    words.push_back(word3);
-    words.push_back(word4);
-    words.push_back(word5);
-    words.push_back(word6);
-
-    scrabbleMenu(5,5,words);
-
-}*/
 
 void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> &words) {
     bool gameIsRunning = true;
@@ -115,7 +101,7 @@ void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> &words) {
             }
 
             if(changeBoard)
-               readFile(tradeBoard);
+                readFile(tradeBoard);
         }
     }
 }

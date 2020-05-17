@@ -1,10 +1,8 @@
 //
-// Created by Pedro on 09-05-2020.
+// Created by 35193 on 17/05/2020.
 //
 
 #include "Board.h"
-
-
 Board::Board(int sizeX, int sizeY) {
     std::vector<Tile> column;
 
@@ -18,7 +16,7 @@ Board::Board(int sizeX, int sizeY) {
             Tile tile;
             column.push_back(tile);
         }
-        board.push_back(column); //maisculas sao os Y;  minusculas sao os X   (Aa -> YX)
+        board_.push_back(column); //maisculas sao os Y;  minusculas sao os X   (Aa -> YX)
         column.clear();
     }
 }
@@ -32,10 +30,10 @@ void Board::drawBoard() {
             int y1 = 5 + y;
             gotoXY(x1, y1);
 
-            if(board[x][y].getFilledState())
+            if(board_[x][y].getFilledState())
                 setColor(16*LIGHTCYAN+RED);
 
-            std::cout << board[x][y].getLetter();
+            std::cout << board_[x][y].getLetter();
             setColor(16*LIGHTCYAN+BLUE);
 
             if(x1 == sizeX-1)
@@ -89,11 +87,11 @@ void Board::drawLimits() {
 
 
 void Board::setTile(Tile tile) {
-    this->board[tile.getX()][tile.getY()] = tile;
+    this->board_[tile.getX()][tile.getY()] = tile;
 }
 
 std::vector<std::vector<Tile>> &Board::getBoard() {
-    return board;
+    return board_;
 }
 
 

@@ -1,9 +1,11 @@
 //
-// Created by Pedro on 07-05-2020.
+// Created by 35193 on 17/05/2020.
 //
 
-#ifndef PROJECT_2___SCRABBLE_JUNIOR_TILE_H
-#define PROJECT_2___SCRABBLE_JUNIOR_TILE_H
+#ifndef SCRABBLE_JUNIOR_TILE_H
+#define SCRABBLE_JUNIOR_TILE_H
+
+
 #include "Game Text.h"
 class Tile
 {
@@ -28,5 +30,4 @@ private:
 };
 
 
-
-#endif //PROJECT_2___SCRABBLE_JUNIOR_TILE_H
+#endif //SCRABBLE_JUNIOR_TILE_H

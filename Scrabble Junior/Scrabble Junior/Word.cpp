@@ -1,11 +1,8 @@
 //
-// Created by Pedro on 11-05-2020.
+// Created by 35193 on 17/05/2020.
 //
 
 #include "Word.h"
-
-#include <utility>
-
 Word::Word() = default;
 
 Word::Word(std::string name, std::string position, char orientation)
@@ -29,4 +26,3 @@ char Word::getOrientation() const
 {
     return orientation;
 }
-

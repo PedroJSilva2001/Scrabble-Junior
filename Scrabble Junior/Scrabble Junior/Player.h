@@ -1,9 +1,10 @@
 //
-// Created by Pedro on 26-04-2020.
+// Created by 35193 on 17/05/2020.
 //
 
-#ifndef PROJECT_2___SCRABBLE_JUNIOR_PLAYER_H
-#define PROJECT_2___SCRABBLE_JUNIOR_PLAYER_H
+#ifndef SCRABBLE_JUNIOR_PLAYER_H
+#define SCRABBLE_JUNIOR_PLAYER_H
+
 
 #include "Game Text.h"
 struct Player
@@ -13,4 +14,4 @@ struct Player
 };
 
 
-#endif //PROJECT_2___SCRABBLE_JUNIOR_PLAYER_H
+#endif //SCRABBLE_JUNIOR_PLAYER_H

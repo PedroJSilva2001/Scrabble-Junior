@@ -1,5 +1,5 @@
 //
-// Created by Pedro on 26-04-2020.
+// Created by 35193 on 17/05/2020.
 //
 
 #include "Gameplay.h"
@@ -30,9 +30,10 @@ Gameplay::Gameplay(int sizeX, int sizeY, std::vector<Word> &words) {
             }
             position[0] = yCh; position[1] = xCh;
             if (!binary_search(positions.begin(), positions.end(), position)) {
-                this->tilePool.push_back(word.getName()[letter]);
+                tilePool.push_back(word.getName()[letter]);
+
                 Tile tile = Tile(word.getName()[letter], x, y, available);    //nao é necessario impedir a criação de uma peça numa posicao do tabuleiro já com peça porque essas duas peças possuem a mesma informação
-                this->board.setTile(tile);    //pôr os objetos tile no tabuleiro              //porem isto é capaz ser mais efieciente
+                board.setTile(tile);    //pôr os objetos tile no tabuleiro              //porem isto é capaz ser mais efieciente
             }
             positions.emplace_back(position);
         }
@@ -257,7 +258,7 @@ bool Gameplay::validateInput(int player, std::string position, char letter, int 
                 //x < 0 || y < 0  seria preciso ver estes casos mas isso nao aconteceria  com as condicoes todas anteriores, que os filtram
                 std::cerr << error_msg << error_msg5_1;
                 std::cerr << error_msg5_2 << char('A'+sizeY-1) << error_msg5_3 << char('a'+sizeX-1)
-                << error_msg5_4 << std::endl;
+                          << error_msg5_4 << std::endl;
             }
 
             else if (board.getBoard()[x][y].getEmptyState())
@@ -328,7 +329,7 @@ void Gameplay::scoring(int player, int x, int y) {
         vertical = false;
     }
     std::cout << player_str << player+1 << gained_points_1 <<
-    points <<  gained_points_2 << std::endl;
+              points <<  gained_points_2 << std::endl;
     players[player].score += points;
 }
 
@@ -370,10 +371,10 @@ bool Gameplay::nextTileUnplayed(int x, int y, bool vertical) {
 
 bool Gameplay::nextTileEmpty(int x, int y, bool vertical) {
     if (vertical) {
-       if (x == sizeY - 1)
-           return true;
-       else
-           x++;
+        if (x == sizeY - 1)
+            return true;
+        else
+            x++;
     }
     else {
         if (y == sizeX - 1)
@@ -439,7 +440,7 @@ bool Gameplay::getGameState(int playerNumber) {
         gameEnded &= players[i].tiles.empty();
     }
     if (gameEnded)
-        std::cout << game_ended;
+        std::cout << gameEnded;
     return gameEnded;
 }
 

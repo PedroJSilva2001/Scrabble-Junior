@@ -1,10 +1,9 @@
 //
-// Created by Pedro on 30-04-2020.
+// Created by 35193 on 17/05/2020.
 //
 
-#ifndef PROJECT_2___SCRABBLE_JUNIOR_GAME_TEXT_H
-#define PROJECT_2___SCRABBLE_JUNIOR_GAME_TEXT_H
-
+#ifndef SCRABBLE_JUNIOR_GAME_TEXT_H
+#define SCRABBLE_JUNIOR_GAME_TEXT_H
 #include <string>
 #include <vector>
 #include <iostream>
@@ -96,4 +95,4 @@ typedef std::tuple<int, int> tuple;
 #define no_valid ", it seems you don't possess valid tiles to play this turn. "
 #define trade_give2 "Now, choose another one"
 #define game_ended "The game has ended, all words have been filled."
-#endif //PROJECT_2___SCRABBLE_JUNIOR_GAME_TEXT_H
+#endif //SCRABBLE_JUNIOR_GAME_TEXT_H
