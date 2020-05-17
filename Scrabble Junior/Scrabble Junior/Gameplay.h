@@ -43,7 +43,6 @@ private:
     bool nextTileUnplayed(int x, int y, bool vertical);
     bool nextTileEmpty(int x, int y, bool vertical);
     bool previousTilePlayed(int x, int y, bool vertical);
-    //bool previousTileUnplayed(int x, int y, bool vertical);
     bool previousTileEmpty(int x, int y, bool vertical);
 };
 

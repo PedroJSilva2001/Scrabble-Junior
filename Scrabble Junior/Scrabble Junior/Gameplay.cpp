@@ -133,6 +133,103 @@ void Gameplay::setValidTiles() {
 }
 
 
+void Gameplay::tradeTiles(int player) {
+    char removedLetter = 'A';
+    bool validTrade = false;
+    int tradeAmount = 2;
+    bool tradedOne = false;
+
+    if (tilePool.size() == 1)
+        tradeAmount = 1;
+    else if (tilePool.empty())
+        tradeAmount = 0;
+
+    while (tradeAmount)
+    {
+        showPlayerInfo(player, true);
+        if (!tradedOne)
+            std::cout << player_str << player+1 << no_valid << trade_give;
+        else
+            std::cout << trade_give2;
+
+        while (!validTrade) {
+            std::cin >> removedLetter;
+            validTrade = validateTrade(player, removedLetter);
+        }
+        tradeAmount--;
+        players[player].tiles.push_back(tilePool[0]); //o jogador recebe as letras da pool
+        std::cout << tilePool[0] << added << std::endl;
+        tilePool.erase(tilePool.begin());
+        std::cout << removedLetter << removed << std::endl;
+        players[player].tiles.erase(
+                std::find(players[player].tiles.begin(), players[player].tiles.end(), removedLetter));
+        tilePool.push_back(removedLetter);     //a pool recebe a letra que o jogador escolhe
+        tradedOne = true;
+
+    }
+
+    std::cout << player_str << player+1 << skipped << std::endl;
+}
+
+void Gameplay::showPlayerInfo(int player, bool trade) {
+    if(!trade)
+        std::cout << player_str << player+1<< player_tiles;
+    for (char &tile: players[player].tiles) {
+        std::cout << ' ' << tile;
+    }
+    std::cout << std::endl;
+
+    if (!trade)
+        std::cout << player_str << player+1<< points1 <<
+                  players[player].score << points2;
+}
+
+
+bool Gameplay::validateTrade(int player, char letter) {
+    bool validTrade = false;
+
+    if (!std::binary_search(players[player].tiles.begin(),
+                            players[player].tiles.end(), letter)){
+        std::cerr << error_msg << error_msg2 << std::endl;
+        std::cerr << retry << std::endl;
+    } else
+        validTrade = true;
+
+    return validTrade;
+}
+
+
+
+
+
+std::tuple<int, int> Gameplay::playerInputs(int player) {
+    std::string boardPosition;
+    char pickedLetter;
+    bool validInput = false;
+    int x, y;
+
+    std::cout << input_format << std::endl;
+    getch();
+    system("cls");
+    showPlayerInfo(player, false);
+    std::cout << player_str << player+1 << player_input1;
+
+    while (!validInput) {
+        std::cin >> pickedLetter >> boardPosition;
+        std::cin.ignore(10, ' ');
+        validInput |= validateInput(player, boardPosition, pickedLetter, x, y);   //sao passados como referencia para nao ter que converter a string para x e y duas vezes
+    }
+
+    tuple coordinates(x, y);
+    players[player].tiles.erase(std::find(players[player].tiles.begin(),
+                                          players[player].tiles.end(), pickedLetter));
+    board.getBoard()[x][y].setFilledState(true);
+    board.getBoard()[x][y].setAvailable(false);
+    return coordinates;
+}
+
+
+
 
 bool Gameplay::validateInput(int player, std::string position, char letter, int &x, int &y) {
     bool validInput = false;
@@ -185,28 +282,6 @@ bool Gameplay::validateInput(int player, std::string position, char letter, int 
 }
 
 
-int Gameplay::getWinner(int playerNumber) {
-    int winner = 0;
-    for (int player = 1; player < playerNumber; player++) {
-        if (players[player].score > players[winner].score) {
-            winner = player;
-        }
-    }
-    return winner;
-}
-
-
-bool Gameplay::getGameState(int playerNumber) {
-    bool game_ended = true;
-    for (int i = 0; i < playerNumber; i++) {
-        game_ended &= players[i].tiles.empty();
-    }
-    return game_ended;
-}
-
-void Gameplay::announceWinner(int winner) {
-    std::cout << player_str << winner + 1<< win;
-}
 
 
 void Gameplay::scoring(int player, int x, int y) {
@@ -256,122 +331,18 @@ void Gameplay::scoring(int player, int x, int y) {
     players[player].score += points;
 }
 
-std::tuple<int, int> Gameplay::playerInputs(int player) {
-    std::string boardPosition;
-    char pickedLetter;
-    bool validInput = false;
-    int x, y;
 
-    std::cout << input_format << std::endl;
-    getch();
-    system("cls");
-    showPlayerInfo(player, false);
-    std::cout << player_str << player+1 << player_input1;
-
-    while (!validInput) {
-        std::cin >> pickedLetter >> boardPosition;
-        std::cin.ignore(10, ' ');
-        validInput |= validateInput(player, boardPosition, pickedLetter, x, y);   //sao passados como referencia para nao ter que converter a string para x e y duas vezes
-    }
-
-    tuple coordinates(x, y);
-    players[player].tiles.erase(std::find(players[player].tiles.begin(),
-                                           players[player].tiles.end(), pickedLetter));
-    board.getBoard()[x][y].setFilledState(true);
-    board.getBoard()[x][y].setAvailable(false);
-    return coordinates;
-}
-
-
-
-void Gameplay::showPlayerInfo(int player, bool trade) {
-    std::cout << player_str << player+1<< player_tiles;
-    for (char &tile: players[player].tiles) {
-        std::cout << ' ' << tile;
-    }
-    std::cout << std::endl;
-
-    if (!trade)
-        std::cout << player_str << player+1<< points1 <<
-              players[player].score << points2;
-}
-
-
-void Gameplay::tradeTiles(int player) {
-    char removedLetter = 'A';
-    bool validTrade = false;
-    int tradeAmount = 2;
-
-    if (tilePool.size() == 1)
-        tradeAmount = 1;
-    else if (tilePool.empty())
-        tradeAmount = 0;
-
-
-    while (tradeAmount)
-    {
-        showPlayerInfo(player, true);
-        std::cout << player_str << player+1 << trade_give;
-
-        while (!validTrade) {
-            std::cin >> removedLetter;
-            validTrade = validateTrade(player, removedLetter);
-        }
-        tradeAmount--;
-        players[player].tiles.push_back(tilePool[0]); //o jogador recebe as letras da pool
-        std::cout << tilePool[0] << added << std::endl;
-        tilePool.erase(tilePool.begin());
-        std::cout << removedLetter << removed << std::endl;
-        players[player].tiles.erase(
-                std::find(players[player].tiles.begin(), players[player].tiles.end(), removedLetter));
-        tilePool.push_back(removedLetter);     //a pool recebe a letra que o jogador escolhe
-    }
-
-    std::cout << player_str << player+1 << skipped << std::endl;
-}
-
-
-
-
-
-
-void Gameplay::draw(int player, int drawAmount) {
-
-    if (!tilePool.empty())
-        std::cout << pool_empty << std::endl;
-
-    while (!tilePool.empty() && drawAmount) {
-        drawAmount--;
-        players[player].tiles.push_back(tilePool[0]);
-        std::cout << player_str << player << tilePool[0] << added << std::endl;
-        tilePool.erase(tilePool.begin());
-    }
-}
-
-
-bool Gameplay::validateTrade(int player, char letter) {
-    bool validTrade = false;
-
-    if (!std::binary_search(players[player].tiles.begin(),
-                            players[player].tiles.end(), letter)){
-        std::cerr << error_msg << error_msg2 << std::endl;
-        std::cerr << retry << std::endl;
-    } else
-        validTrade = true;
-
-    return validTrade;
-}
 
 
 bool Gameplay::nextTilePlayed(int x, int y, bool vertical) {
     if (vertical) {
-        if (x == sizeY - 1)   //rows
+        if (x == sizeY-1)   //rows
             return false;
         else
             x++;
     }
     else {
-        if (y == sizeX - 1)
+        if (y == sizeX-1)
             return false;
         else
             y++;
@@ -393,7 +364,7 @@ bool Gameplay::nextTileUnplayed(int x, int y, bool vertical) {
         else
             y++;
     }
-    return !board.getBoard()[x][y].getFilledState() && !board.getBoard()[x][y].getEmptyState() && !board.getBoard()[x][y].getAvailable();
+    return !board.getBoard()[x][y].getFilledState() && !board.getBoard()[x][y].getAvailable() && !board.getBoard()[x][y].getEmptyState() ;
 }
 
 bool Gameplay::nextTileEmpty(int x, int y, bool vertical) {
@@ -429,35 +400,59 @@ bool Gameplay::previousTilePlayed(int x, int y, bool vertical) {
     return board.getBoard()[x][y].getFilledState();
 }
 
-/*bool Gameplay::previousTileUnplayed(int x, int y, bool vertical) {
-    if (vertical) {
-        if (x == 0)
-            return false;
-        else
-            x--;
-    }
-    else {
-        if (y == 0)
-            return false;
-        else
-            y--;
-    }
-    return !board.getBoard()[x][y].getFilledState() && !board.getBoard()[x][y].getEmptyState();
-}*/
 
 bool Gameplay::previousTileEmpty(int x, int y, bool vertical) {
     if (vertical) {
         if (x == 0)
-            return false;
+            return true;
         else
             x--;
     }
     else {
         if (y == 0)
-            return false;
+            return true;
         else
             y--;
     }
     return board.getBoard()[x][y].getEmptyState();
 }
 
+
+void Gameplay::draw(int player, int drawAmount) {
+
+    if (!tilePool.empty())
+        std::cout << pool_empty << std::endl;
+
+    while (!tilePool.empty() && drawAmount) {
+        drawAmount--;
+        players[player].tiles.push_back(tilePool[0]);
+        std::cout << player_str << player << tilePool[0] << added << std::endl;
+        tilePool.erase(tilePool.begin());
+    }
+}
+
+
+bool Gameplay::getGameState(int playerNumber) {
+    bool gameEnded = true;
+    for (int i = 0; i < playerNumber; i++) {
+        gameEnded &= players[i].tiles.empty();
+    }
+    if (gameEnded)
+        std::cout << game_ended;
+    return gameEnded;
+}
+
+
+int Gameplay::getWinner(int playerNumber) {
+    int winner = 0;
+    for (int player = 1; player < playerNumber; player++) {
+        if (players[player].score > players[winner].score) {
+            winner = player;
+        }
+    }
+    return winner;
+}
+
+void Gameplay::announceWinner(int winner) {
+    std::cout << player_str << winner + 1<< win;
+}

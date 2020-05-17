@@ -51,8 +51,8 @@
 
 
 typedef std::tuple<int, int> tuple;
-#define input_format "The input format for the position in the board should be the following: Aa (column in uppercase and line in lowercase)"
-#define player_str "Player "
+#define input_format "The input format for the position in the board should be the following: Aa (column in uppercase and line in lowercase)."
+#define player_str "Player"
 #define player_input1 ", choose the letter you want to place in the board and the position you want to play it in."
 #define win " won!"
 #define error_msg "Error: "
@@ -76,10 +76,9 @@ typedef std::tuple<int, int> tuple;
 #define player_tiles " you have the following letters:"
 #define player_num "How many players will be playing? (pick a number from 2 to 4)"
 #define retry "Try again."
-#define trade_give " choose a piece you want to put in the tile pool:"
+#define trade_give "Choose a piece you want to put in the tile pool:"
 #define file "Type the name of the file where the game board you want to play is, no extension needed:"
 #define added " has been added to your hand."
-#define and_msg " and "
 #define removed " has been removed from your hand."
 #define pool_empty "You can't draw anymore, the pool has no more tiles"
 #define points1 " you have "
@@ -94,4 +93,7 @@ typedef std::tuple<int, int> tuple;
 #define distributed1 "7 tiles have been distributed for all "
 #define distributed2 " players."
 #define end_msg "Thanks for playing the game. I hope I get a full mark on this one!! :))"
+#define no_valid ", it seems you don't possess valid tiles to play this turn. "
+#define trade_give2 "Now, choose another one"
+#define game_ended "The game has ended, all words have been filled."
 #endif //PROJECT_2___SCRABBLE_JUNIOR_GAME_TEXT_H

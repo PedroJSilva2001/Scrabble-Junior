@@ -19,6 +19,29 @@ Board::Board(int sizeX, int sizeY) {
             column.push_back(tile);
         }
         board.push_back(column); //maisculas sao os Y;  minusculas sao os X   (Aa -> YX)
+        column.clear();
+    }
+}
+void Board::drawBoard() {
+    drawLimits();
+    setColor(16*LIGHTCYAN+BLUE);
+    for (int x = 0; x < sizeX; x++ ) {
+        int x1 = 7 + 3*x;
+        for (int y = 0; y < /*=*/ sizeY; y++) {
+            int y1 = 5 + y;
+            gotoXY(x1, y1);
+
+            if(board[x][y].getFilledState())
+                setColor(16*LIGHTCYAN+RED);
+
+            std::cout << board[x][y].getLetter();
+            setColor(16*LIGHTCYAN+BLUE);
+
+            if(x1 == sizeX-1)
+                std::cout <<" ";
+            else
+                std::cout << "  ";
+        }
     }
 }
 
@@ -26,6 +49,7 @@ void Board::drawLimits() {
     std::string s = "ABCDEFGHIJKLMNOPQRSTabcdefghijklmnopqrst";
     int vOffset = 5;
     int hOffset = 5;
+    setColor(16*LIGHTCYAN+MAGENTA);
     for (int i = 0; i < sizeX; i++) {
         int x = hOffset + 3 * i;
         gotoXY(x, 3);
@@ -41,7 +65,7 @@ void Board::drawLimits() {
             std::cout << "____ ";
         } else {
             std::cout << "___";
-            gotoXY(x, vOffset + sizeY/*+2*/);
+            gotoXY(x, vOffset + sizeY);
             std::cout << "___";
         }
 
@@ -60,9 +84,22 @@ void Board::drawLimits() {
         gotoXY(66, y);
         std::cout << "|";
     }
-
-
 }
+
+
+void Board::setTile(Tile tile) {
+    this->board[tile.getX()][tile.getY()] = tile;
+}
+
+std::vector<std::vector<Tile>> &Board::getBoard() {
+    return board;
+}
+
+
+void Board::setColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
 
 void Board::gotoXY(int x, int y) {
     COORD coord;
@@ -70,34 +107,3 @@ void Board::gotoXY(int x, int y) {
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
-
-void Board::setTile(Tile tile) {
-    this->board[tile.getX()][tile.getY()] = tile;
-
-}
-
-std::vector<std::vector<Tile>> &Board::getBoard() {
-    return board;
-}
-
-void Board::drawBoard() {
-    drawLimits();
-    for (int x = 0; x < sizeX; x++ ) {
-        int x1 = 7 + 3*x;
-        for (int y = 0; y < /*=*/ sizeY; y++) {
-            int y1 = 5 + y;
-            gotoXY(x1, y1);
-            //cout << "a ";
-            if(board[x][y].getFilledState())
-                setColor(3);
-            std::cout << board[x][y].getLetter();
-
-            std::cout << " ";
-        }
-    }
-}
-
-void Board::setColor(int color) {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-}
-
