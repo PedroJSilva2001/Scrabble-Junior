@@ -28,7 +28,7 @@ void readFile(bool tradeBoard) {
         std::cerr << retry << std::endl;
         std::cin >> filePath;
         getline(std::cin, filePath);
-        std::cin.ignore(10, ' ');
+        //std::cin.ignore(10, ' ');
     }
 
     while (!data.eof()) {
@@ -64,15 +64,15 @@ void readFile(bool tradeBoard) {
     }*/
 }
 
-void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> &words) {
+void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> words) {
     bool gameIsRunning = true;
     int continueGame = 1;
     int changeBoard = 1;
     bool tradeBoard = true;
 
     while(gameIsRunning) {
-        Gameplay game = Gameplay(sizeX, sizeY, words);
-
+        Gameplay game = Gameplay();
+        game.set(sizeX, sizeY, words);
         game.startGame();
         std::cout << play_again << std::endl;
         std::cin >> continueGame;

@@ -15,16 +15,19 @@
 class Gameplay
 {
 public:
-    Gameplay(int sizeX, int sizeY, std::vector<Word> &words);
+    Gameplay();
+    Gameplay(int sizeX, int sizeY, const std::vector<Word>& words);
     void startGame();
+    void set(int sizeX, int sizeY, const std::vector<Word>& words);
 
 private:
     std::vector <char> tilePool;
-    int sizeX, sizeY;
+    //int sizeX, sizeY;
     std::vector <char> validTiles;
     Player player1, player2, player3, player4;
     Player players[4] = {player1, player2, player3, player4};   //const
-    Board board = Board(sizeX, sizeY);
+    //Board board = Board(sizeX, sizeY);
+    Board board = Board();
     int getWinner(int playerNumber);
     bool getGameState(int playerNumber);
     static void announceWinner(int winner);

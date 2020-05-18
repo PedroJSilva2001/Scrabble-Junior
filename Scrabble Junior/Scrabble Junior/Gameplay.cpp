@@ -3,8 +3,8 @@
 //
 
 #include "Gameplay.h"
-Gameplay::Gameplay(int sizeX, int sizeY, std::vector<Word> &words) {
-    int x, y;
+Gameplay::Gameplay(int sizeX, int sizeY, const std::vector<Word>& words) {
+    /*int x, y;
     char xCh, yCh;
     char position[2];
     bool available;
@@ -35,6 +35,43 @@ Gameplay::Gameplay(int sizeX, int sizeY, std::vector<Word> &words) {
                 Tile tile = Tile(word.getName()[letter], x, y, available);    //nao é necessario impedir a criação de uma peça numa posicao do tabuleiro já com peça porque essas duas peças possuem a mesma informação
                 board.setTile(tile);    //pôr os objetos tile no tabuleiro              //porem isto é capaz ser mais efieciente
             }
+            positions.emplace_back(position);
+        }
+    }*/
+}
+
+void Gameplay::set(int sizeX, int sizeY,  const std::vector<Word>& words){
+    int x, y;
+    char xCh, yCh;
+    char position[2];
+    bool available;
+    std::vector <std::string> positions;
+    //board.setBoardDimensions(sizeX, sizeY);
+    this->board = Board(sizeX, sizeY);
+
+    for (auto &word: words) {  //comparação com codigo ASCII visto que as letras nesse codigo estão todas seguidas
+        x = word.getPosition()[1] -'a';
+        y = word.getPosition()[0] - 'A';
+        xCh = x + 'a';
+        yCh = y + 'A';
+        for (int letter = 0; letter < word.getName().size(); letter++)  //percorrer as letras de uma palavra
+        {
+            available = letter == 0;
+            //pôr todas as letras das palavras na tile pool
+            if (word.getOrientation() == 'H') {  //na horizantal o que varia é a coordenada x das letras
+                x += letter; xCh += letter;
+            }
+            else {  //orientação vertical - varia a coordenada y das letras
+                y += letter; yCh += letter;
+            }
+            position[0] = yCh; position[1] = xCh;
+            if (!binary_search(positions.begin(), positions.end(), position)) {
+                tilePool.push_back(word.getName()[letter]);
+
+                Tile tile = Tile(word.getName()[letter], x, y, available);    //nao é necessario impedir a criação de uma peça numa posicao do tabuleiro já com peça porque essas duas peças possuem a mesma informação
+                board.setTile(tile);    //pôr os objetos tile no tabuleiro              //porem isto é capaz ser mais efieciente
+            }
+            x=0; y=0;
             positions.emplace_back(position);
         }
     }
@@ -254,10 +291,10 @@ bool Gameplay::validateInput(int player, std::string position, char letter, int 
             x = position[1] - 'a';  //comparação com codigo ASCII visto que as letras nesse codigo estão todas seguidas
             y = position[0] - 'A';    // a partir deste codigo é suposto as inputs estarem na forma "Aa" portanto é so ver a logica das tiles
 
-            if (x > sizeX - 1 || y > sizeY - 1) {
+            if (x > board.getSizeX() - 1 || y > board.getSizeY() - 1) {
                 //x < 0 || y < 0  seria preciso ver estes casos mas isso nao aconteceria  com as condicoes todas anteriores, que os filtram
                 std::cerr << error_msg << error_msg5_1;
-                std::cerr << error_msg5_2 << char('A'+sizeY-1) << error_msg5_3 << char('a'+sizeX-1)
+                std::cerr << error_msg5_2 << char('A'+board.getSizeY()-1) << error_msg5_3 << char('a'+board.getSizeX()-1)
                           << error_msg5_4 << std::endl;
             }
 
@@ -338,13 +375,13 @@ void Gameplay::scoring(int player, int x, int y) {
 
 bool Gameplay::nextTilePlayed(int x, int y, bool vertical) {
     if (vertical) {
-        if (x == sizeY-1)   //rows
+        if (x == board.getSizeY()-1)   //rows
             return false;
         else
             x++;
     }
     else {
-        if (y == sizeX-1)
+        if (y == board.getSizeX()-1)
             return false;
         else
             y++;
@@ -355,13 +392,13 @@ bool Gameplay::nextTilePlayed(int x, int y, bool vertical) {
 
 bool Gameplay::nextTileUnplayed(int x, int y, bool vertical) {
     if (vertical){
-        if (x == sizeY - 1)
+        if (x == board.getSizeY()- 1)
             return false;
         else
             x++;
     }
     else {
-        if (y == sizeX - 1)
+        if (y == board.getSizeX() - 1)
             return false;
         else
             y++;
@@ -371,13 +408,13 @@ bool Gameplay::nextTileUnplayed(int x, int y, bool vertical) {
 
 bool Gameplay::nextTileEmpty(int x, int y, bool vertical) {
     if (vertical) {
-        if (x == sizeY - 1)
+        if (x == board.getSizeY() - 1)
             return true;
         else
             x++;
     }
     else {
-        if (y == sizeX - 1)
+        if (y == board.getSizeX() - 1)
             return true;
         else
             y++;
@@ -458,3 +495,6 @@ int Gameplay::getWinner(int playerNumber) {
 void Gameplay::announceWinner(int winner) {
     std::cout << player_str << winner + 1<< win;
 }
+
+Gameplay::Gameplay() = default;
+

@@ -9,6 +9,6 @@
 #include "Gameplay.h"
 
 void readFile(bool tradeBoard);
-void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> &words);
+void scrabbleMenu(int sizeX, int sizeY, std::vector <Word> words);
 void f();
 #endif //SCRABBLE_JUNIOR_MENU_H

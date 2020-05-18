@@ -7,7 +7,7 @@ Board::Board(int sizeX, int sizeY) {
     std::vector<Tile> column;
 
     this->sizeX = sizeX;
-    this->sizeY = sizeX;
+    this->sizeY = sizeY;
 
     for (int columnCount = 0;
          columnCount < sizeX; columnCount++) {//vetor de colunas -> tantas colunas quanto existem Xs
@@ -106,3 +106,32 @@ void Board::gotoXY(int x, int y) {
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
+
+void Board::setBoardDimensions(int sizeX, int sizeY) {
+    std::vector<Tile> column;
+
+    this->sizeX = sizeX;
+    this->sizeY = sizeY;
+
+    for (int columnCount = 0;
+         columnCount < sizeX; columnCount++) {//vetor de colunas -> tantas colunas quanto existem Xs
+
+        for (int rowCount = 0; rowCount < sizeY; rowCount++) {
+            Tile tile;
+            column.push_back(tile);
+        }
+        board_.push_back(column); //maisculas sao os Y;  minusculas sao os X   (Aa -> YX)
+        column.clear();
+    }
+}
+
+int Board::getSizeX() {
+    return sizeX;
+}
+
+int Board::getSizeY() {
+    return sizeY;
+}
+
+Board::Board() = default;
+

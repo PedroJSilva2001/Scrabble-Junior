@@ -12,10 +12,14 @@
 class Board
 {
 public:
+    Board();
     Board(int sizeX, int sizeY);/*const std::vector<Word> &words*/
     void drawBoard();
     void setTile(Tile tile);
     std::vector<std::vector<Tile>> &getBoard();
+    void setBoardDimensions(int sizeX, int sizeY);
+    int getSizeX();
+    int getSizeY();
 
 private:
     int sizeX, sizeY;
